@@ -17,7 +17,6 @@ class IndexController extends Zend_Controller_Action
     	$user = $this->getViewer();
     	if ($user) $this->_helper->redirector('index'); //User has no business here.
     	if($this->getRequest()->isPost()){
-    		if($this->getRequest()->getMethod() == 'POST'){
     			if ($this->_process(array("username" => $this->getRequest()->getPost('username'),
     										"password"=>$this->getRequest()->getPost('password'),
     			))) {
@@ -25,7 +24,6 @@ class IndexController extends Zend_Controller_Action
     			} else {
     				die ("nope");
     			}
-    		}
     	}
     }
 	
