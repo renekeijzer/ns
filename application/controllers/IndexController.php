@@ -16,13 +16,14 @@ class IndexController extends Zend_Controller_Action
     public function loginAction(){
     	$user = $this->getViewer();
     	if ($user) $this->_helper->redirector('index'); //User has no business here.
-    	$this->view->form = $form = new Application_Form_Login();
     	if($this->getRequest()->isPost()){
-    		if($form->isValid($this->getRequest()->getPost())){
-    			if ($this->_process($form->getValues())) {
+    		if($this->getRequest()->getMethod() == 'POST'){
+    			if ($this->_process(array("username" => $this->getRequest()->getPost('username'),
+    										"password"=>$this->getRequest()->getPost('password'),
+    			))) {
     				$this->_helper->redirector('index');
     			} else {
-    				echo "nope";
+    				die ("nope");
     			}
     		}
     	}
@@ -49,7 +50,7 @@ class IndexController extends Zend_Controller_Action
     }
     
     protected function _getAuthAdapter() {
-    	$table = new Core_Model_DbTable_User();
+    	$table = new Application_Model_DbTable_User();
     	$dbAdapter = $table->getAdapter();
     	$authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
     	
@@ -64,7 +65,7 @@ class IndexController extends Zend_Controller_Action
     protected function getViewer(){
     	$auth = Zend_Auth::getInstance();
     	if ($auth->hasIdentity()) {
-    		$table = new Core_Model_DbTable_User();
+    		$table = new Application_Model_DbTable_User();
     		$user = $table->find($auth->getIdentity()->user_id)->current();
     		if($user) return $user;
     		else return false;

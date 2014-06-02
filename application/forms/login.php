@@ -6,9 +6,9 @@ class Application_Form_Login extends Ns_Form
     public function init()
     {
 		$this->setAttrib('id','login');
-		$this->addElement('text','email',array(
-			'label'=>'E-mailadres',
-			'placeholder'=>'Uw email adres',
+		$this->addElement('text','user',array(
+			'label'=>'Username',
+			'placeholder'=>'Username',
 			'required'=>true,
 			'decorators'=>array(
 				array(
