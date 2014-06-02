@@ -1,17 +1,44 @@
-<!DOCTYPE html> 
+<?php /*<!DOCTYPE html> 
 <html> 
 	<title>Ns - Questionnaire</title>
-		<script type="text/javascript" src="<?= $this->baseUrl("js/jquery.mobile.custom.min.js");?>"></script>
-		<link href="<?= $this->baseUrl("css/jquery.mobile.custom.theme.min.css")?>" rel="stylsheet"/>
-		<link href="<?= $this->baseUrl("css/jquery.mobile.custom.structure.min.css")?>" rel="stylsheet"/>
-		<link href="<?= $this->baseUrl("css/style.css")?>" rel="stylesheet"/>
     	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<link href="<?= $this->baseUrl("css/jquery.mobile.custom.structure.min.css")?>" rel="stylsheet"/>
+		<link href="<?= $this->baseUrl("css/jquery.mobile.custom.theme.min.css")?>" rel="stylsheet"/>
+		
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	</head>
 <body> 
 
-    <div data-role="page">
-    	<?=$this->layout()->content;?>
-    </div>
+    <div data-role="header">
+		<h1>My Title</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+		<p>Hello world</p>		
+	</div><!-- /content -->
+
+</body>
+</html>*/?>
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>My Page</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<script type="text/javascript" src="<?=$this->baseUrl('js/jquery-1.10.2.js');?>"></script>
+	<script type="text/javascript" src="<?=$this->baseUrl('js/jquery.mobile-1.4.2.min.js');?>"></script>
+	<link rel="stylesheet" href="<?=$this->baseUrl('css/jquery.mobile-1.4.2.min.css');?>" />
+	<link rel="stylesheet" href="<?=$this->baseUrl('css/NS.min.css');?>" />
+	<link rel="stylesheet" href="<?=$this->baseUrl('css/jquery.mobile.icons.min.css');?>" />
+	<link href="<?= $this->baseUrl("css/style.css")?>" rel="stylesheet"/>
+</head> 
+<body> 
+
+
+
+	<?=$this->layout()->content;?>
+
+
 
 </body>
 </html>
