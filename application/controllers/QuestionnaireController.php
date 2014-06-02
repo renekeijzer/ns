@@ -10,10 +10,7 @@ class QuestionnaireController extends Zend_Controller_Action{
 	public function viewAction(){
 		
 	}
-	public function updateAction(){
-		
-	}
-	public function deleteAction(){
-		
+	public function submitAction(){
+	
 	}
 }
