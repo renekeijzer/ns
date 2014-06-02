@@ -14,7 +14,18 @@ class IndexController extends Zend_Controller_Action
     }
     
     public function loginAction(){
-    	
+    	$user = $this->getViewer();
+    	if ($user) $this->_helper->redirector('index'); //User has no business here.
+    	$this->view->form = $form = new Application_Form_Login();
+    	if($this->getRequest()->isPost()){
+    		if($form->isValid($this->getRequest()->getPost())){
+    			if ($this->_process($form->getValues())) {
+    				$this->_helper->redirector('index');
+    			} else {
+    				echo "nope";
+    			}
+    		}
+    	}
     }
 	
     public function logoutAction(){
