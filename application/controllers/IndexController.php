@@ -6,7 +6,10 @@ class IndexController extends Zend_Controller_Action
     public function init()
     {
        if(!$this->getViewer()){
-       	//$this->_helper->redirector("index/login");
+           $action = $this->getRequest()->getActionName();
+           if($action!='login'){
+                $this->_helper->redirector("index/login");
+           }
        }
     }
 
