@@ -49,7 +49,7 @@ class IndexController extends Zend_Controller_Action
     }
     
     protected function _getAuthAdapter() {
-    	$table = new Application_Model_DbTable_User();
+    	$table = new Core_Model_DbTable_User();
     	$dbAdapter = $table->getAdapter();
     	$authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
     	
@@ -64,7 +64,7 @@ class IndexController extends Zend_Controller_Action
     protected function getViewer(){
     	$auth = Zend_Auth::getInstance();
     	if ($auth->hasIdentity()) {
-    		$table = new Application_Model_DbTable_User();
+    		$table = new Core_Model_DbTable_User();
     		$user = $table->find($auth->getIdentity()->user_id)->current();
     		if($user) return $user;
     		else return false;
