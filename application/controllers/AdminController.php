@@ -25,6 +25,9 @@ class AdminController extends Zend_Controller_Action{
 	public function deleteUserAction(){
 		
 	}
+	public function viewUserAction(){
+		
+	}
 	
 	/* questionnaire CRUD */
 	
