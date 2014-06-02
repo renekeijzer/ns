@@ -15,21 +15,30 @@ class IndexController extends Zend_Controller_Action
     
     public function loginAction(){
     	$user = $this->getViewer();
-    	if ($user) $this->_helper->redirector('index'); //User has no business here.
-    	if($this->getRequest()->isPost()){
-    			if ($this->_process(array("username" => $this->getRequest()->getPost('username'),
-    										"password"=>$this->getRequest()->getPost('password'),
-    			))) {
-    				$this->_helper->redirector('index');
-    			} else {
-    				die ("nope");
-    			}
+        if ($user)
+            $this->_helper->redirector('index'); // User has no
+                                                            // business here.
+        if ($this->getRequest()->isPost()) {
+            if ($this->_process(
+                    array(
+                            "username" => $this->getRequest()
+                                ->getPost('username'),
+                            "password" => $this->getRequest()
+                                ->getPost('password')
+                    ))) {
+                $this->_helper->redirector('index');
+            } else {
+                die("nope");
+            }
     	}
     }
 	
     public function logoutAction(){
-    	
+        Zend_Auth::getInstance()->clearIdentity();
+        $this->_helper->redirector('login');
     }
+    
+    
     protected function _process($values)
     {
     	// Get our authentication adapter and check credentials
@@ -56,7 +65,7 @@ class IndexController extends Zend_Controller_Action
     	->setTableName($table->info('name'))
     	->setIdentityColumn('username')
     	->setCredentialColumn('password')
-    	->setCredentialTreatment('(CONCAT(sha1(?), salt))');
+    	->setCredentialTreatment('(concat(sha1(?), salt))');
     	return $authAdapter;
     }
     
