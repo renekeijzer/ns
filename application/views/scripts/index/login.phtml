@@ -1,9 +1,25 @@
-<div class='login-control'> 
-	<form method="post" action="">
-	<label>Username:</label><br>
-	<input type="text" name="username" required><br>
-	<label>Password:</label><br>
-	<input type="password" name="password" 	><br>
-	<input type="submit" value="login">
-</form>
+
+<style>
+label {
+	text-align: center;
+}
+</style>
+<div data-role="page">
+	<div data-role="header">
+		<h1>NS Survey App</h1>
 	</div>
+
+	<div data-role="content">
+		<form method="post" action="<?=$this->url();?>">
+			<label for="name">Gebruikersnaam:</label> <input type="text"
+				name="username" id="username" placeholder="Gebruikersnaam" value=""
+				class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"> <label
+				for="name">Wachtwoord:</label> <input type="password"
+				name="password" id="password" placeholder="Wachtwoord" value=""
+				class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset">
+				<input type="submit" value="Inloggen" />
+		</form>
+	</div>
+
+	<div data-role="footer">NS Survey App</div>
+</div>

@@ -30,8 +30,11 @@ class IndexController extends Zend_Controller_Action
     }
 	
     public function logoutAction(){
-    	
+        Zend_Auth::getInstance()->clearIdentity();
+        $this->_helper->redirector('login');
     }
+    
+    
     protected function _process($values)
     {
     	// Get our authentication adapter and check credentials
@@ -58,7 +61,7 @@ class IndexController extends Zend_Controller_Action
     	->setTableName($table->info('name'))
     	->setIdentityColumn('username')
     	->setCredentialColumn('password')
-    	->setCredentialTreatment('(CONCAT(sha1(?), salt))');
+    	->setCredentialTreatment('(concat(sha1(?), salt))');
     	return $authAdapter;
     }
     
