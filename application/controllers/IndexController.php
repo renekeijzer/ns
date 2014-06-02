@@ -61,7 +61,7 @@ class IndexController extends Zend_Controller_Action
     	->setTableName($table->info('name'))
     	->setIdentityColumn('username')
     	->setCredentialColumn('password')
-    	->setCredentialTreatment('(concat(sha1(?), salt))');
+    	->setCredentialTreatment('(sha1(concat(?, salt)))');
     	return $authAdapter;
     }
     
