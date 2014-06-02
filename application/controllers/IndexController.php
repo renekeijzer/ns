@@ -5,7 +5,9 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+       if(!$this->getViewer()){
+       	//$this->_helper->redirector("index/login");
+       }
     }
 
     public function indexAction()
@@ -22,7 +24,7 @@ class IndexController extends Zend_Controller_Action
     			))) {
     				$this->_helper->redirector('index');
     			} else {
-    				die ("nope");
+    				echo "Het password/username is niet valide, probeer het nogmaals";
     			}
     	}
     }
