@@ -1,3 +1,77 @@
-<div>
-	<h3><b>View for view/questionnaireController</b></h3>
+<div data-theme="a" data-form="ui-body-a"
+	class="ui-body ui-body-a ui-corner-all">
+<?php foreach ($this->questions as $q):?>
+<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+		
+<?php
+	
+switch ($q->type) :
+		case "text" :?>
+		<label for="<?= $q->question_id?>" class=""><?=$q->label;?>:</label>
+		<input type="text" name="<?=$q->question_id;?>" id="<?=$q->question_id;?>" value="" data-mini="true" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini">		
+		<?php break;?>
+		<?php case "textarea":?>
+		<label for="<?= $q->question_id?> class=""><?=$q->label?></label>
+		<textarea cols="40" rows="8" name="textarea" id="textarea" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
+		<?php break;?>
+		<?php case "slider":?>
+		
+<label for="<?= $q->question_id?>" class="ui-slider" id="slider-label"><?= $q->label;?></label>
+<input type="number" data-type="range" name="<?= $q->question_id?>" id="slider" value="<?= Zend_Json::Decode($q->params)['min'] + Zend_Json::Decode($q->params)['max'] / 2?>" min="<?= Zend_Json::Decode($q->params)['min']?>" max="<?= Zend_Json::Decode($q->params)['max']?>" data-highlight="true" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input">
+<div role="application" class="ui-slider  ui-btn-down-c ui-btn-corner-all">
+<div class="ui-slider-bg ui-btn-active ui-btn-corner-all"></div>
+		
+		<?php break;?>
+		<?php case "select":?>
+		
+		
+		<?php break;?>
+		<?php case "radio":?>
+		<fieldset data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+		<div role="heading" class="ui-controlgroup-label"><?= $q->label?>:</div>
+		<div class="ui-controlgroup-controls">
+		
+		<?php $values = Zend_Json::decode($q->options);
+				foreach ($values as $k => $v):
+		?>
+		<div class="ui-radio"><input type="radio" name="<?= $q->question_id?>" id="<?= $q->question_id.$k?>" value="<?= $k?>">
+			<label for="<?= $q->question_id.$k?>" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="c" data-mini="false" class="ui-btn ui-fullsize ui-btn-icon-left ui-corner-top ui-btn-up-c ui-radio-off">
+				<span class="ui-btn-inner ui-corner-top">
+					<span class="ui-btn-text"><?= $v?>
+					</span>
+				<span class="ui-icon ui-icon-shadow ui-icon-radio-off">
+				&nbsp;
+				</span>
+				</span>
+			</label>
+		</div>
+			       
+			
+		
+		<?php endforeach;?>
+		</div>
+		</fieldset>
+		<?php break;?>
+		<?php case "number":?>
+		<?php break;?>
+		<?php case "date":?>
+		<?php break;?>
+		<?php case "checkbox":?>
+		<?php break;?>
+		
+		
+<?php endswitch;?>
+
+
+
+
+
+
+</div>
+<?php endforeach;?>
+
+
+
+
+
 </div>

@@ -1,12 +1,12 @@
 <?php
 class UserController extends Zend_Controller_Action{
 	public function init(){
-		if(!$this->getViewer()){
-			$action = $this->getRequest()->getActionName();
-			if($action!='login'){
-				$this->_helper->redirector("index/login");
-			}
-		}
+// 		if(!$this->getViewer()){
+// 			$action = $this->getRequest()->getActionName();
+// 			if($action!='login'){
+// 				$this->_helper->redirector("index/login");
+// 			}
+//		}
 	}
 	public function indexAction(){
 		$questionnaireTable = new Application_Model_DbTable_Questionnaire();

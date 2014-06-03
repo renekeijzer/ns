@@ -1,8 +1,17 @@
-<div class="questionnaire-container">
+<style>
+.container{
+	float:left;
+	height:75px;
+	width:50%;
+	text-align:center;
+}
+</style>
+
+<div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all">
 	<?php foreach ($this->questionnairs as $q):?>
-			<div class="questionnaire-item">
-					test	
-			</div>
+	<div class="container left"><?= $q->title;?></div>
+    <div class="container right"><a href="<?= $this->baseUrl("questionnaire/view/id/".$q->questionnaire_id)?>" data-role="button">Enqu&ecirc;te invullen	</a></div>
+                        <hr>
 	<?php endforeach;?>
 
 </div>
