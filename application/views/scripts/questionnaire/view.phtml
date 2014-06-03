@@ -5,52 +5,84 @@
 		
 <?php
 	
-switch ($q->type) :
-		case "text" :?>
-		<label for="<?= $q->question_id?>" class=""><?=$q->label;?>:</label>
-		<input type="text" name="<?=$q->question_id;?>" id="<?=$q->question_id;?>" value="" data-mini="true" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini">		
+	switch ($q->type) :
+		case "text" :
+			?>
+		<label for="<?= $q->question_id?>" class=""><?=$q->label;?>:</label> <input
+			type="text" name="<?=$q->question_id;?>" id="<?=$q->question_id;?>"
+			value="" data-mini="true"
+			class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini">		
 		<?php break;?>
 		<?php case "textarea":?>
 		<label for="<?= $q->question_id?> class=""><?=$q->label?></label>
-		<textarea cols="40" rows="8" name="textarea" id="textarea" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
+		<textarea cols="40" rows="8" name="textarea" id="textarea"
+			class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
 		<?php break;?>
 		<?php case "slider":?>
 		
 <label for="<?= $q->question_id?>" class="ui-slider" id="slider-label"><?= $q->label;?></label>
-<input type="number" data-type="range" name="<?= $q->question_id?>" id="slider" value="<?= Zend_Json::Decode($q->params)['min'] + Zend_Json::Decode($q->params)['max'] / 2?>" min="<?= Zend_Json::Decode($q->params)['min']?>" max="<?= Zend_Json::Decode($q->params)['max']?>" data-highlight="true" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input">
-<div role="application" class="ui-slider  ui-btn-down-c ui-btn-corner-all">
-<div class="ui-slider-bg ui-btn-active ui-btn-corner-all"></div>
+		<input type="number" data-type="range" name="<?= $q->question_id?>"
+			id="slider"
+			value="<?= Zend_Json::Decode($q->params)['min'] + Zend_Json::Decode($q->params)['max'] / 2?>"
+			min="<?= Zend_Json::Decode($q->params)['min']?>"
+			max="<?= Zend_Json::Decode($q->params)['max']?>"
+			data-highlight="true"
+			class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input">
+		<div role="application"
+			class="ui-slider  ui-btn-down-c ui-btn-corner-all">
+			<div class="ui-slider-bg ui-btn-active ui-btn-corner-all"></div>
 		
 		<?php break;?>
 		<?php case "select":?>
-		
+		<label for="select-choice-1" class="select ui-select">Choose shipping
+				method:</label>
+			<div class="ui-select">
+				<div data-corners="true" data-shadow="true" data-iconshadow="true"
+					data-wrapperels="span" data-icon="arrow-d" data-iconpos="right"
+					data-theme="c"
+					class="ui-shadow ui-btn-corner-all ui-btn-up-c">
+					<select
+						name="select-choice-1" id="select-choice-1">
+						<option value="standard">Standard: 7 day</option>
+						<option value="rush">Rush: 3 days</option>
+						<option value="express">Express: next day</option>
+						<option value="overnight">Overnight</option>
+					</select>
+				</div>
+			</div>
 		
 		<?php break;?>
 		<?php case "radio":?>
-		<fieldset data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
-		<div role="heading" class="ui-controlgroup-label"><?= $q->label?>:</div>
-		<div class="ui-controlgroup-controls">
+		<fieldset data-role="controlgroup"
+				class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+				<div role="heading" class="ui-controlgroup-label"><?= $q->label?>:</div>
+				<div class="ui-controlgroup-controls">
 		
-		<?php $values = Zend_Json::decode($q->options);
-				foreach ($values as $k => $v):
-		?>
-		<div class="ui-radio"><input type="radio" name="<?= $q->question_id?>" id="<?= $q->question_id.$k?>" value="<?= $k?>">
-			<label for="<?= $q->question_id.$k?>" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="radio-off" data-theme="c" data-mini="false" class="ui-btn ui-fullsize ui-btn-icon-left ui-corner-top ui-btn-up-c ui-radio-off">
-				<span class="ui-btn-inner ui-corner-top">
-					<span class="ui-btn-text"><?= $v?>
-					</span>
-				<span class="ui-icon ui-icon-shadow ui-icon-radio-off">
-				&nbsp;
-				</span>
-				</span>
-			</label>
-		</div>
+		<?php
+			
+$values = Zend_Json::decode ( $q->options );
+			foreach ( $values as $k => $v ) :
+				?>
+		<div class="ui-radio">
+						<input type="radio" name="<?= $q->question_id?>"
+							id="<?= $q->question_id.$k?>" value="<?= $k?>"> <label
+							for="<?= $q->question_id.$k?>" data-corners="true"
+							data-shadow="false" data-iconshadow="true" data-wrapperels="span"
+							data-icon="radio-off" data-theme="c" data-mini="false"
+							class="ui-btn ui-fullsize ui-btn-icon-left ui-corner-top ui-btn-up-c ui-radio-off">
+							<span class="ui-btn-inner ui-corner-top"> <span
+								class="ui-btn-text"><?= $v?>
+					</span> <span class="ui-icon ui-icon-shadow ui-icon-radio-off">
+									&nbsp; </span>
+						</span>
+						</label>
+					</div>
 			       
 			
 		
 		<?php endforeach;?>
 		</div>
-		</fieldset>
+			</fieldset>
 		<?php break;?>
 		<?php case "number":?>
 		<?php break;?>
