@@ -13,8 +13,8 @@ class UserController extends Zend_Controller_Action{
 		$dateNow = date("%m%d/%Y H:i:s");
 		$select = $questionnaireTable->select()->where("expire_date >= ?",  $dateNow);
 		$questionnairs = $questionnaireTable->fetchAll($select)->toArray();
-		
-		$this->view->$questionnairs = $questionnairs;
+
+		$this->view->questionnairs = $questionnairs;
 	}
 	public function updateAction(){
 		
