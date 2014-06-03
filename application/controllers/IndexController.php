@@ -8,8 +8,8 @@ class IndexController extends Zend_Controller_Action
        if(!$this->getViewer()){
            $action = $this->getRequest()->getActionName();
            if($action!='login'){
-                $this->_helper->redirector("login");
-           }
+                $this->redirect("index/login");
+          }
        }
     }
 
