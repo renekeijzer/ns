@@ -1,94 +1,204 @@
 <div data-theme="a" data-form="ui-body-a"
 	class="ui-body ui-body-a ui-corner-all">
 <?php foreach ($this->questions as $q):?>
+	<form method="post"
+			action="<?= $this->baseurl("/questionnaire/submit")?>">
 <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-		
+	
 <?php
 	
 	switch ($q->type) :
 		case "text" :
 			?>
-		<label for="<?= $q->question_id?>" class=""><?=$q->label;?>:</label> <input
-			type="text" name="<?=$q->question_id;?>" id="<?=$q->question_id;?>"
-			value="" data-mini="true"
-			class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini">		
+			<div data-role="fieldcontain">
+				<label for="<?= $q->question_id?>" ><?=$q->label;?>:</label>
+				<input type="text" name="<?=$q->question_id;?>"
+					id="<?=$q->question_id;?>" data-mini="true"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini"
+					<?= ($q->required == 1 ? "required":"");?>>
+				<?php if($q->comments ==1):?>
+			<label for="c<?= $q->question_id?>">Commentaar:</label>
+				<textarea cols="40" rows="8" name="c<?= $q->question_id?>"
+					id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					style="margin-top: 10px"></textarea>
+<?php endif;?>
+		</div>	
 		<?php break;?>
 		<?php case "textarea":?>
-		<label for="<?= $q->question_id?> class=""><?=$q->label?></label>
-		<textarea cols="40" rows="8" name="textarea" id="textarea"
-			class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"></textarea>
+		<div data-role="fieldcontain">
+
+				<label for="<?= $q->question_id?>" ><?=$q->label?></label>
+				<textarea cols="40" rows="8" name="<?= $q->question_id?>" id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					<?= ($q->required == 1 ? "required":"");?>></textarea>
+			</div>
 		<?php break;?>
 		<?php case "slider":?>
-		
-<label for="<?= $q->question_id?>" class="ui-slider" id="slider-label"><?= $q->label;?></label>
-		<input type="number" data-type="range" name="<?= $q->question_id?>"
-			id="slider"
-			value="<?= Zend_Json::Decode($q->params)['min'] + Zend_Json::Decode($q->params)['max'] / 2?>"
-			min="<?= Zend_Json::Decode($q->params)['min']?>"
-			max="<?= Zend_Json::Decode($q->params)['max']?>"
-			data-highlight="true"
-			class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input">
-		<div role="application"
-			class="ui-slider  ui-btn-down-c ui-btn-corner-all">
-			<div class="ui-slider-bg ui-btn-active ui-btn-corner-all"></div>
-		
+		<div data-role="fieldcontain">
+
+				<label for="<?= $q->question_id?>" class="ui-slider"
+					id="slider-label"><?= $q->label;?></label> <input type="number"
+					data-type="range" name="<?= $q->question_id?>" id="slider"
+					value="<?= Zend_Json::Decode($q->params)['min'] + Zend_Json::Decode($q->params)['max'] / 2?>"
+					min="<?= Zend_Json::Decode($q->params)['min']?>"
+					max="<?= Zend_Json::Decode($q->params)['max']?>"
+					data-highlight="true"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input"
+					<?= ($q->required == 1 ? "required":"");?>>
+				<div role="application"
+					class="ui-slider  ui-btn-down-c ui-btn-corner-all">
+					<div class="ui-slider-bg ui-btn-active ui-btn-corner-all"></div>
+				</div>
+			<?php if($q->comments ==1):?>
+			<label for="c<?= $q->question_id?>">Commentaar:</label>
+				<textarea cols="40" rows="8" name="c<?= $q->question_id?>"
+					id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					style="margin-top: 10px"></textarea>
+<?php endif;?>
+			</div>
 		<?php break;?>
 		<?php case "select":?>
-		<label for="select-choice-1" class="select ui-select">Choose shipping
-				method:</label>
-			<div class="ui-select">
-				<div data-corners="true" data-shadow="true" data-iconshadow="true"
-					data-wrapperels="span" data-icon="arrow-d" data-iconpos="right"
-					data-theme="c"
-					class="ui-shadow ui-btn-corner-all ui-btn-up-c">
-					<select
-						name="select-choice-1" id="select-choice-1">
-						<option value="standard">Standard: 7 day</option>
-						<option value="rush">Rush: 3 days</option>
-						<option value="express">Express: next day</option>
-						<option value="overnight">Overnight</option>
-					</select>
-				</div>
-			</div>
 		
+		<div data-role="fieldcontain">
+
+				<label for="select-choice-1" class="select ui-select"><?= $q->label?></label>
+				<div class="ui-select">
+					<div data-corners="true" data-shadow="true" data-iconshadow="true"
+						data-wrapperels="span" data-icon="arrow-d" data-iconpos="right"
+						data-theme="c" class="ui-shadow ui-btn-corner-all ui-btn-up-c">
+						<select name="<?= $q->question_id?>" id="<?= $q->question_id?>"
+							<?= ($q->required == 1 ? "required":"");?>>
+					<?php
+			$values = Zend_Json::decode ( $q->options );
+			foreach ( $values as $k => $v ) :
+				?>
+						<option value="<?=$k?>"><?=$v?></option>
+					<?php endforeach;?>
+					</select>
+					</div>
+				</div>
+				<?php if($q->comments ==1):?>
+			<label for="c<?= $q->question_id?> >Commentaar:</label>
+				<textarea cols="40" rows="8" name="c<?= $q->question_id?>"
+					id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					style="margin-top: 10px"></textarea>
+<?php endif;?>
+			</div>
 		<?php break;?>
 		<?php case "radio":?>
-		<fieldset data-role="controlgroup"
-				class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
-				<div role="heading" class="ui-controlgroup-label"><?= $q->label?>:</div>
-				<div class="ui-controlgroup-controls">
+		<div data-role="fieldcontain">
+
+				<fieldset data-role="controlgroup"
+					class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+					<div role="heading" class="ui-controlgroup-label"><?= $q->label?>:</div>
+					<div class="ui-controlgroup-controls">
 		
 		<?php
 			
-$values = Zend_Json::decode ( $q->options );
+			$values = Zend_Json::decode ( $q->options );
 			foreach ( $values as $k => $v ) :
 				?>
 		<div class="ui-radio">
-						<input type="radio" name="<?= $q->question_id?>"
-							id="<?= $q->question_id.$k?>" value="<?= $k?>"> <label
-							for="<?= $q->question_id.$k?>" data-corners="true"
-							data-shadow="false" data-iconshadow="true" data-wrapperels="span"
-							data-icon="radio-off" data-theme="c" data-mini="false"
-							class="ui-btn ui-fullsize ui-btn-icon-left ui-corner-top ui-btn-up-c ui-radio-off">
-							<span class="ui-btn-inner ui-corner-top"> <span
-								class="ui-btn-text"><?= $v?>
+							<input type="radio" name="<?= $q->question_id?>"
+								<?= ($q->required == 1 ? "required":"");?>
+								id="<?= $q->question_id.$k?>" value="<?= $k?>"> <label
+								for="<?= $q->question_id.$k?>" data-corners="true"
+								data-shadow="false" data-iconshadow="true"
+								data-wrapperels="span" data-icon="radio-off" data-theme="c"
+								data-mini="false"
+								class="ui-btn ui-fullsize ui-btn-icon-left ui-corner-top ui-btn-up-c ui-radio-off">
+								<span class="ui-btn-inner ui-corner-top"> <span
+									class="ui-btn-text"><?= $v?>
 					</span> <span class="ui-icon ui-icon-shadow ui-icon-radio-off">
-									&nbsp; </span>
-						</span>
-						</label>
-					</div>
+										&nbsp; </span>
+							</span>
+							</label>
+						</div>
 			       
 			
 		
 		<?php endforeach;?>
 		</div>
-			</fieldset>
+				</fieldset>
+				<?php if($q->comments ==1):?>
+			<label for="c<?= $q->question_id?>>Commentaar:</label>
+				<textarea cols="40" rows="8" name="c<?= $q->question_id?>"
+					id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					style="margin-top: 10px"></textarea>
+<?php endif;?>
+			</div>
 		<?php break;?>
 		<?php case "number":?>
+			<div data-role="fieldcontain">
+
+				<label for="<?= $q->question_id?>"><?=$q->label;?>:</label>
+				<input type="number" name="<?= $q->question_id?>"
+					id="<?= $q->question_id?>"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input"
+					<?= ($q->required == 1 ? "required":"");?>>
+			<?php if($q->comments ==1):?>
+			<label for="c<?= $q->question_id?>">Commentaar:</label>
+				<textarea cols="40" rows="8" name="c<?= $q->question_id?>"
+					id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					style="margin-top: 10px"></textarea>
+<?php endif;?>
+			</div>
 		<?php break;?>
 		<?php case "date":?>
+		<div data-role="fieldcontain">
+				<label for="<?= $q->question_id?>"><?=$q->label;?>:</label>
+				<input type="date" data-role="date" data-inline="true"
+					<?= ($q->required == 1 ? "required":"");?>
+					name="<?= $q->question_id?>"
+					class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+		<?php if($q->comments ==1):?>
+			<label for="c<?= $q->question_id?>">Commentaar:</label>
+				<textarea cols="40" rows="8" name="c<?= $q->question_id?>"
+					id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					style="margin-top: 10px"></textarea>
+<?php endif;?>
+		</div>
 		<?php break;?>
 		<?php case "checkbox":?>
+		<div data-role="fieldcontain">
+				<fieldset data-role="controlgroup">
+					<legend><?= $q->label?></legend>
+					<div class="ui-checkbox">
+						<?php
+			
+$values = Zend_Json::decode ( $q->options );
+			foreach ( $values as $k => $v ) :
+				?>
+
+	   <input type="checkbox" name="<?= $q->question_id ?>"
+							value="<?= $k ?>" id="<?= $k ?>" 
+						 /> <label
+							for="<?= $k ?>" data-theme="c"
+							class="ui-btn ui-btn-icon-left ui-checkbox-off ui-corner-top ui-corner-bottom ui-controlgroup-last ui-btn-up-c">
+							<span
+							class="ui-btn-inner ui-corner-top ui-corner-bottom ui-controlgroup-last"
+							aria-hidden="true"> <span class="ui-btn-text"><?= $v?></span><span
+								class="ui-icon ui-icon-checkbox-off ui-icon-shadow"> </span>
+						</span>
+						</label>
+			<?php endforeach;?>
+			</div>
+				</fieldset>
+	   <?php if($q->comments ==1):?>
+			<label for="c<?= $q->question_id?>">Commentaar:</label>
+				<textarea cols="40" rows="8" name="c<?= $q->question_id?>"
+					id="textarea"
+					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
+					style="margin-top: 10px"></textarea>
+<?php endif;?>
+			</div>
+			
 		<?php break;?>
 		
 		
@@ -98,12 +208,13 @@ $values = Zend_Json::decode ( $q->options );
 
 
 
-
-</div>
+	
+	</div>
 <?php endforeach;?>
+<button type="submit" data-theme="c" name="submit" value="submit-value"
+		class="ui-btn-hidden" aria-disabled="false">Submit</button>
 
 
 
-
-
+	</form>
 </div>

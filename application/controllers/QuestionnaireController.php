@@ -18,6 +18,6 @@ class QuestionnaireController extends Zend_Controller_Action{
 		
 	}
 	public function submitAction(){
-	
+		var_dump($this->getRequest()->getPost());
 	}
 }
