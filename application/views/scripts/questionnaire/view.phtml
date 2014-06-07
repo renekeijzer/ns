@@ -1,8 +1,8 @@
 <div data-theme="a" data-form="ui-body-a"
 	class="ui-body ui-body-a ui-corner-all">
 <?php foreach ($this->questions as $q):?>
-	<form method="post"
-			action="<?= $this->baseurl("/questionnaire/submit")?>">
+	<form method="post" id="questionnaire"
+			action="<?= $this->url()?>">
 <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
 	
 <?php
@@ -29,7 +29,7 @@
 		<div data-role="fieldcontain">
 
 				<label for="<?= $q->question_id?>" ><?=$q->label?></label>
-				<textarea cols="40" rows="8" name="<?= $q->question_id?>" id="textarea"
+				<textarea cols="40" rows="8" name="<?= $q->question_id?>" id="<?= $q->question_id?>"
 					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset"
 					<?= ($q->required == 1 ? "required":"");?>></textarea>
 			</div>
@@ -152,7 +152,7 @@
 		<?php case "date":?>
 		<div data-role="fieldcontain">
 				<label for="<?= $q->question_id?>"><?=$q->label;?>:</label>
-				<input type="date" data-role="date" data-inline="true"
+				<input type="date" data-role="date" data-inline="true" id="<?= $q->question_id?>"
 					<?= ($q->required == 1 ? "required":"");?>
 					name="<?= $q->question_id?>"
 					class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
@@ -211,10 +211,33 @@ $values = Zend_Json::decode ( $q->options );
 	
 	</div>
 <?php endforeach;?>
-<button type="submit" data-theme="c" name="submit" value="submit-value"
-		class="ui-btn-hidden" aria-disabled="false">Submit</button>
+<input type="hidden" name="questionnaire_id" value="<?= $this->id;?>">
+<a href="#popupSubmit" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-icon="check" data-theme="c" data-transition="flip" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" aria-haspopup="true" aria-owns="#popupSubmit" class="ui-btn ui-shadow ui-btn-hidden ui-btn-corner-all ui-btn-inline ui-btn-icon-left ui-btn-up-a">
+<span class="ui-btn-inner">
+<span class="ui-btn-text">Submit</span>
+<span class="ui-icon ui-icon-check ui-icon-shadow">&nbsp;
+</span>
+</span>
+</a>
 
-
+					<div class="ui-popup-container pop ui-popup-hidden" id="popupSubmit-popup"><div data-role="popup" id="popupSubmit" data-theme="c" data-dismissible="true" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="origin">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner">
+						<h1 class="ui-title" role="heading" aria-level="1">Formulier opslaan</h1>
+					</div>
+					<div data-role="content" data-theme="c" style="background-color:#fcb501;"class="ui-corner-bottom ui-content ui-body-d" role="main">
+						<h3 class="ui-title">Weet je zeker dat je deze gegevens wilt opslaan?</h3>
+						<p>Je kan de gegevens hierna niet meer aanpassen.</p>
+						<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">Cancel</span></span></a>    
+						<a href="#" id="submitForm" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline"><span class="ui-btn-inner"><span class="ui-btn-text">Submit</span></span></a>  
+					</div>
+				</div></div>
 
 	</form>
 </div>
+<script type="text/javascript">
+
+$("#submitForm").click(function(e){
+    e.preventDefault();
+	$("form").submit();
+});
+</script>
