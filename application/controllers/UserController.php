@@ -12,7 +12,9 @@ class UserController extends Zend_Controller_Action{
 		$questionnaireTable = new Application_Model_DbTable_Questionnaire();
 		$dateNow = date("%m%d/%Y H:i:s");
 		$select = $questionnaireTable->select()->where("expire_date >= ?",  $dateNow);
-
+		/*
+		 * @todo when login is done, only show the right questionnaires
+		 */
 		$questionnairs = $questionnaireTable->fetchAll($select);
 		
 		$this->view->questionnairs = $questionnairs;
