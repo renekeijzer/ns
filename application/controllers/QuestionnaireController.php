@@ -14,23 +14,22 @@ class QuestionnaireController extends Zend_Controller_Action{
 			$commentsTable = new Application_Model_DbTable_Comments();
 			$questions = $questionsTable->fetchAll($questionsTable->select()->where("questionnaire_id = ? ", $this->getParam("id")));
 			foreach ($questions as $q){
-				$rowComments = $anwerTable->createRow();
+				$rowComments = $commentsTable->createRow();
 				$row = $anwerTable->createRow();
 				$row->question_id = $q->question_id;
 				$row->answer = ($this->getParam($q->question_id) == null? "":$this->getParam($q->question_id));
-				$row->user_id = $this->getViewer()->user_id;
+				$row->user_id = ($this->getViewer() != null ? $this->getViewer()->user_id:"") ;
 				$row->save();
 				if($this->getParam("c".$q->question_id) != ""){
-// 					die($row->anwer_id);
-// 				$rowComments->answer_id = $row->anwer_id;
-// 				$rowComments->comments = $this->getParam("c".$q->question_id);
-// 				$rowComments->save();
+	 				$rowComments->answer_id = $row->anwer_id;
+					$rowComments->comments = $this->getParam("c".$q->question_id);
+					$rowComments->save();
 				}
 			}
 			
 			
 			
-			$this->redirect("/questionnaire/submit");
+			$this->redirect("/questionnaire/submit/id/".$this->getParam("id"));
 		}
 		if($this->_getParam("id") != null){
 			$this->view->id = $this->_getParam("id");
@@ -43,7 +42,14 @@ class QuestionnaireController extends Zend_Controller_Action{
 		
 	}
 	public function submitAction(){
-		
+		if($this->_getParam("id") != null){
+			$questionnaireTable = new Application_Model_DbTable_Questionnaire();
+			$this->view->name = $questionnaireTable->find($this->_getParam("id"))->current()->title;
+			$this->view->once = $questionnaireTable->find($this->_getParam("id"))->current()->once;
+			$this->view->id = $this->_getParam("id");
+		}else{
+			$this->redirect("user/index");
+		}
 	}
 	
 	protected function _process($values)

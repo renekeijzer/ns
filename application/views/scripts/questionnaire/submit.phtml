@@ -1,3 +1,12 @@
-<div>
-	<h3><b>View for submit/questionnaireController</b></h3>
+<div data-theme="a" data-form="ui-body-a"
+	class="ui-body ui-body-a ui-corner-all">
+<div class="text-center" style="text-align:center;">
+	<p>Bedankt voor het invullen van dit fomulier(<?= $this->name;?>)</p>
+	<a href="<?= $this->baseUrl('user/index')?>" data-role="button" data-theme="c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">Terug naar overzicht</span></span></a>
+	<?php if(!$this->once):?>
+	<a href="<?= $this->baseUrl('questionnaire/view/id/'.$this->id)?>" data-role="button" data-inline="true"  data-theme="c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">Vul dit formulier nog een keer in</span></span></a>
+	
+	
+	<?php endif;?>
+</div>
 </div>
