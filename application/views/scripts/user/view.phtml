@@ -1,3 +1,27 @@
-<div>
-	<h3><b>View for view/userController</b></h3>
+
+<div data-theme="a" data-form="ui-body-a"class="ui-body ui-body-a ui-corner-all">
+
+<h2>Mijn profiel</h2>
+	<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+		<div data-role="fieldcontain">
+		<label for="username">Username:</label>
+			<input type="text" name="username" value="<?= $this->user->username?>" disabled="true"
+				class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini" />
+		</div>
+		<div data-role="fieldcontain">
+		<label for="email">Email:</label>
+		
+			<input type="text" name="email" value="<?= $this->user->email?>"disabled="true"
+				class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini" />
+		</div>
+		<div data-role="fieldcontain">
+		<label for="tel">Telefoon-nummer:</label>
+			<input type="text" name="tel" value="<?= $this->user->telnr?>"disabled="true"
+				class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-mini" />
+		</div>
+
+		<div data-role="fieldContain">
+			<a href="<?= $this->baseUrl('user/update')?>" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c" >Bewerk</a>
+		</div>
+		</div>
 </div>

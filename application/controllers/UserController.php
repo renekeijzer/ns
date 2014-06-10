@@ -52,7 +52,9 @@ class UserController extends Zend_Controller_Action{
 		$this->view->user = $user;
 	}
 	public function viewAction(){
-		
+		$userTable = new Application_Model_DbTable_User();
+		$user = $userTable->find($this->getViewer()->user_id)->current();
+		$this->view->user = $user;
 	}	
 	
 
