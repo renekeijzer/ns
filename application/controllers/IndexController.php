@@ -5,12 +5,12 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
-       if(!$this->getViewer()){
-           $action = $this->getRequest()->getActionName();
-           if($action!='login'){
-                $this->redirect("index/login");
-          }
-       }
+    	if(!$this->getViewer()){
+    		$action = $this->getRequest()->getActionName();
+    		if($action!='login' && $action!='register'){
+    			$this->redirect("index/login");
+    		}
+    	}
     }
 
     public function indexAction()
@@ -33,8 +33,34 @@ class IndexController extends Zend_Controller_Action
     }
 	
     public function logoutAction(){
-        Zend_Auth::getInstance()->clearIdentity();
-        $this->_helper->redirector('login');
+            $auth = Zend_Auth::getInstance();
+		if ($auth->hasIdentity()) {
+			Zend_Auth::getInstance()->clearIdentity();
+			$this->_helper->redirector('index');
+		}
+    }
+    public function registerAction(){
+    	$userTable = new Application_Model_DbTable_User();
+    	$user = $userTable->createRow();
+    	if($this->getRequest()->getPost() != null){
+    		$user->telnr = $this->getParam("tel");
+    		$user->username = $this->getParam("username");
+    		$user->email = $this->getParam("email");
+    		$user->role = "observer";
+    		$user->enabled = 1;
+    		if(($this->getParam("pw1") == $this->getParam("pw2"))){
+    				if(strlen($this->getParam("pw1")) > 0){
+    			$user->salt = $salt = uniqid(mt_rand(), true);
+    			$user->password = sha1($this->getParam("pw1").$salt);
+
+    				}
+    		}
+    			
+    		$user->save();
+    		$this->_helper->redirector('index');
+    			
+    	}
+    	
     }
     
     

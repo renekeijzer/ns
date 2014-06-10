@@ -2,7 +2,7 @@
 	class="ui-body ui-body-a ui-corner-all">
 <?php foreach ($this->questions as $q):?>
 	<form method="post" id="questionnaire"
-			action="<?= $this->url()?>">
+			action="<?$this->baseUrl("questionnaire/view/". $this->id);?>">
 <div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
 	
 <?php

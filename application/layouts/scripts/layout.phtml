@@ -34,13 +34,27 @@
 </head> 
 <body> 
 <div data-role="page">
-	<div data-role="header">
-		<?php //if page, show backbutton ?>
+	<div data-role="header" data-add-back-btn="true">
 		<h1>NS Survey App</h1>
-	   <?php // if logged in show menu ?>
+	   <?php 	$auth = Zend_Auth::getInstance();
+			if ($auth->hasIdentity()) : ?>
+	   <a href="#nav-panel" data-icon="bars" data-iconpos="notext" class="ui-btn-right ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-notext ui-btn-up-f" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" title="Menu"><span class="ui-btn-inner"><span class="ui-btn-text">Menu</span><span class="ui-icon ui-icon-bars ui-icon-shadow">&nbsp;</span></span></a>
+	   <?php endif;?>
 	</div>
-
+	<div data-role="panel" data-position="right" data-position-fixed="false" data-display="reveal" id="nav-panel" data-theme="c" class="ui-panel ui-panel-position-left ui-panel-display-reveal ui-body-a ui-panel-animate ui-panel-closed">
+		<div class="ui-panel-inner">
+			<ul data-role="listview" data-theme="c" data-divider-theme="c" style="margin-top:-16px;" class="nav-search ui-listview">
+			<li data-icon="delete" style="background-color:#111;" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-iconpos="left" data-theme="c" class="ui-btn ui-btn-up-a ui-btn-icon-right ui-li-has-arrow ui-li ui-first-child"><div class="ui-btn-inner ui-li"><div class="ui-btn-text">
+							<a href="#" data-rel="close" class="ui-link-inherit">Close menu</a>
+						</div><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></div></li>
+						<li data-filtertext="wai-aria voiceover accessibility screen reader" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="left" data-theme="c" class="ui-btn ui-btn-up-a ui-btn-icon-right ui-li-has-arrow ui-li"><div class="ui-btn-inner ui-li"><div class="ui-btn-text">
+							<a href="../about/accessibility.html" class="ui-link-inherit">Accessibility</a>
+						</div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>
+			</ul>
+		</div>
+	</div>
 	<div data-role="content">
+
 	<?=$this->layout()->content;?>
 		</div>
 <div data-role="footer">NS Survey App</div>
