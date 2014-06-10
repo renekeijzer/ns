@@ -1,3 +1,46 @@
-<div>
-	<h3><b>View for update/adminController</b></h3>
-</div>
+<a onclick="window.history.go(-1)" class='btn btn-primary'>Terug</a>
+<h3>Gebruiker bewerken <?=$this->user->username?></h3>
+<form method='post' action='<?=$this->url();?>'>
+    <div class='col-md-12' style='margin-top:20px'></div>
+    <div class='col-md-3'>
+        Gebruikersnaam:    
+    </div>
+    <div class='col-md-9'>
+        <input type='text' name='username' class='form-control' value='<?=$this->user->username;?>'/>
+    </div><div class='col-md-12' style='margin-top:20px'></div>
+    <div class='col-md-3'>
+        Emailadres:    
+    </div>
+    <div class='col-md-9'>
+        <input type='text' name='email' class='form-control' value='<?=$this->user->email;?>'/>
+    </div>
+    <div class='col-md-12' style='margin-top:20px'></div>
+    <div class='col-md-3'>
+        Wachtwoord:
+    </div>
+    <div class='col-md-9'>
+        <input type='password' name='password' class='form-control' placeholder='Nieuw wachtwoord'/><br/>
+        <i>NB: Alleen invullen wanneer U ook de wachtwoord wilt wijzigen.</i>
+    </div>
+    <div class='col-md-12' style='margin-top:20px'></div>
+    <div class='col-md-3'>
+        Bevoegdheid:    
+    </div>
+    <div class='col-md-9'>
+        <select name='role' class='form-control'>
+            <option value='super admin' <?php if($this->user->role=='role admin') echo 'selected';?>>Super Admin</option>
+            <option value='admin' <?php if($this->user->role=='admin') echo 'selected';?>>Admin</option>
+            <option value='observer' <?php if($this->user->role=='observer') echo 'selected';?>>Gebruiker</option>
+        </select>
+    </div>
+    <div class='col-md-12' style='margin-top:20px'></div>
+    <div class='col-md-3'>
+        Telefoonnummer:    
+    </div>
+    <div class='col-md-9'>
+        <input type='text' name='number' class='form-control' value='<?=$this->user->telnr;?>'/>
+    </div>
+    <div class='col-md-12 text-center'>
+        <input type='submit' class='btn btn-success' value='Opslaan'/>
+    </div>
+</form>

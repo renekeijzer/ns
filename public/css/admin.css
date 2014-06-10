@@ -1,0 +1,13 @@
+body{
+}
+.navbar-default{
+	background:#333399;
+	border:none;
+	border-radius:0;
+}
+.navbar-default .navbar-nav>li>a,.navbar-default .navbar-brand{
+	color:#fff;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus,.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
+	color:#ddd;
+}

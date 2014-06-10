@@ -1,3 +1,61 @@
-<div>
-	<h3><b>View for update-questionnaire/adminController</b></h3>
+<a onclick="window.history.go(-1)" class='btn btn-primary'>Terug</a>
+<h1>Wijzig vragenlijst: <?=$this->questionnaire->title;?></h1>
+<form method='post' action='<?=$this->url();?>'>
+<?php foreach($this->questions as $question):?>
+    <div class='col-md-12' style='margin-top:20px'></div>
+    <div class='col-md-3'>
+        <label><?=$question->label;?></label>
+    </div>
+    <div class='col-md-6'>
+        <?php if($question->type=='text'):?>
+            <input class='form-control'  type='text' />
+        <?php elseif($question->type=='select'):?>
+            <select class='form-control' >
+            <?php 
+                $options = json_decode($question->options);
+                foreach($options as $k=>$v):
+            ?>
+            <option value='<?=$k?>'>
+                <?=$v;?>
+             </option>
+            <?php endforeach; ?>
+            </select>
+        <?php elseif($question->type=='textarea'): ?>
+            <?php 
+                $attributes = json_decode($question->params);
+            ?>
+            <textarea class='form-control' <?php foreach($attributes as $k=>$v)echo "$k='$v'"?>></textarea>
+        <?php elseif($question->type=='slider'): ?>
+            <?php 
+                $attributes = json_decode($question->params);
+            ?>
+           <?=$attributes->min;?><input style='width: 90%;display: inline;margin: 0px 10px' type="range" <?php foreach($attributes as $k=>$v)echo "$k='$v' "?>/><?=$attributes->max;?>    
+        <?php elseif($question->type=='scale'): ?>
+            <?php 
+                $options= json_decode($question->params);
+            ?>
+            <?=$options->minlabel;?>
+            <?php for($i=0; $i<$options->max;$i++):?>
+                <input name='<?=$question->question_id;?>' type='radio'/>
+            <?php endfor;?>
+            <?=$options->maxlabel;?>
+        <?php elseif($question->type=='checkbox'): ?>
+            <?php 
+                $options = json_decode($question->options);
+                foreach($options as $k=>$v):
+            ?>
+            <input type='checkbox' value='<?=$k?>'/>
+                <?=$v;?><br/>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+    <div class='col-md-3'>
+        <a href='<?=$this->baseUrl('admin/update-question/id/'.$question->question_id);?>' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> Wijzigen</a>
+        <a onclick="return confirm('Waarschuwing: Alle antwoorden geassocieerd met deze vragen zullen ook verloren gaan. Weet U zeker dat U deze vraag wilt verwijderen?');" href='<?=$this->baseUrl('admin/delete-question/id/'.$question->question_id.'/qid/'.$this->questionnaire->questionnaire_id)?>' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a>
+    </div>
+<?php endforeach; ?>
+</form>
+<div class='col-md-12' style='margin-top:20px'>
+    <a href='<?=$this->baseUrl('admin/create-question/id/'.$this->questionnaire->questionnaire_id);?>' class='btn btn-primary'><span class='glyphicon glyphicon-plus'></span> Vraag toevoegen</a>
+    <input type='submit' class='btn btn-success' value='Opslaan'/>
 </div>

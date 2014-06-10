@@ -1,14 +1,61 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Ns - Questionnaire</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=9">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NS Questionnaire Admin</title>
 <script type="text/javascript"
-	src="<?= $this->baseUrl("js/bootstrap.min.js")?>"></script>
+	src="<?= $this->baseUrl("js/bootstrap.min.js")?>"></script><!-- JQUERY SCRIPTS -->
+	<script src="<?= $this->baseUrl("js/jquery-1.10.2.js")?>"></script>
+	<!-- BOOTSTRAP SCRIPTS -->
+	<script
+		src="<?= $this->baseUrl("js/bootstrap.min.js")?>"></script>
 <link href="<?= $this->baseUrl("css/bootstrap.min.css")?>"
 	rel="stylesheet">
-<link href="<?= $this->baseUrl("css/admin.css")?>"
-	rel="stylesheet">
+<link href="<?= $this->baseUrl("css/admin.css")?>" rel="stylesheet">
+<script src="<?= $this->baseUrl("js/Chart.js")?>"></script>
 </head>
 <body>
-
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Menu weergeven</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="<?=$this->baseUrl('admin/index');?>"><img style='height:23px; margin-right:10px' src='<?=$this->baseUrl('images/nslogo.png');?>' alt='NS'/>NS Questionnaire</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+          <li><a href='<?=$this->baseUrl('admin/index');?>'>Start</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Acties <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?=$this->baseUrl('admin/manage-questionnaires');?>">Questionnaires beheren</a></li>
+                <li class="divider"></li>
+                <li><a href="<?=$this->baseUrl('admin/manage-users');?>">Gebruikers beheren</a></li>
+                <li><a href="<?=$this->baseUrl('admin/import-users');?>">Gebruikers importeren</a></li>
+                <li><a href="<?=$this->baseUrl('admin/export-users');?>">Gebruikers exporteren</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form method='get' action="<?=$this->baseUrl('admin/logout')?>">
+          <ul class="nav navbar-nav navbar-right">
+            <li><input type="submit" class="btn btn-danger navbar-btn" value="Uitloggen"/></li>
+          </ul>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class='container'>
+        <?=$this->layout()->content;?>
+    </div>
+    
 </body>
 </html>

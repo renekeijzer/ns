@@ -1,3 +1,51 @@
-<div>
-	<h3><b>View for view-questionnaire/adminController</b></h3>
-</div>
+<a onclick="window.history.go(-1)" class='btn btn-primary'>Terug</a>
+<h1><?=$this->questionnaire->title;?></h1>
+<?php foreach($this->questions as $question):?>
+    <div class='col-md-12' style='margin-top:20px'></div>
+    <div class='col-md-3'>
+        <label><?=$question->label;?></label>
+    </div>
+    <div class='col-md-9'>
+        <?php if($question->type=='text'):?>
+            <input class='form-control'  type='text' />
+        <?php elseif($question->type=='select'):?>
+            <select class='form-control' >
+            <?php 
+                $options = json_decode($question->options);
+                foreach($options as $k=>$v):
+            ?>
+            <option value='<?=$k?>'>
+                <?=$v;?>
+             </option>
+            <?php endforeach; ?>
+            </select>
+        <?php elseif($question->type=='textarea'): ?>
+            <?php 
+                $attributes = json_decode($question->params);
+            ?>
+            <textarea class='form-control' <?php foreach($attributes as $k=>$v)echo "$k='$v'"?>></textarea>
+        <?php elseif($question->type=='slider'): ?>
+            <?php 
+                $attributes = json_decode($question->params);
+            ?>
+           <?=$attributes->min;?> <input  type="range" <?php foreach($attributes as $k=>$v)echo "$k='$v' "?>/>    <?=$attributes->max;?>    
+        <?php elseif($question->type=='scale'): ?>
+            <?php 
+                $options= json_decode($question->params);
+            ?>
+            <?=$options->minlabel;?>
+            <?php for($i=0; $i<$options->max;$i++):?>
+                <input name='<?=$question->question_id;?>' type='radio'/>
+            <?php endfor;?>
+            <?=$options->maxlabel;?>
+        <?php elseif($question->type=='checkbox'): ?>
+            <?php 
+                $options = json_decode($question->options);
+                foreach($options as $k=>$v):
+            ?>
+            <input type='checkbox' value='<?=$k?>'/>
+                <?=$v;?><br/>
+                <?php endforeach;?>
+        <?php endif; ?>
+    </div>
+<?php endforeach; ?>

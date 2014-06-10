@@ -413,3 +413,7 @@ button[disabled],
 	outline-style: auto;
 }
 			
+.ui-radio{
+	display:inline-block;
+	width:32px;
+}

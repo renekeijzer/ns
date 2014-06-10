@@ -1,0 +1,42 @@
+<h1>Gebruikers beheren</h1>
+	<!-- Table -->
+	<div class='col-md-12' style='margin-top:10px; margin-bottom:10px;'><a class='btn btn-success' href='<?=$this->baseUrl('admin/create-user')?>'><span class='glyphicon glyphicon-plus'></span> Gebruiker toevoegen</a></div>
+	<table class="table table-condensed table-hover">
+		<tr class='active'>
+			<th>Status</th>
+			<th>Gebruikersnaam</th>
+			<th>Email</th>
+			<th>Telefoonnummer</th>
+			<th>Rol</th>
+			<th>Acties</th>
+		</tr>
+		<?php foreach($this->users as $user):?>
+		<?php if($user->enabled==1): ?>
+	    <tr>
+		<?php else: ?>
+		<tr class='danger'>
+	    <?php endif; ?>
+	        <td><?php if($user->enabled==1): ?>
+			         Actief
+			         <?php else: ?>
+			         Non-actief
+			         <?php endif; ?></td>
+			<td><?=$user->username;?></td>
+			<td><?=$user->email;?></td>
+			<td><?=$user->telnr;?></td>
+			<td><?=$user->role;?></td>
+			<td>
+			     <a href='<?=$this->baseUrl('admin/update-user/id/'.$user->user_id)?>'>Wijzigen</a> | 
+			     <?php if($user->enabled==1): ?>
+			         <a href='<?=$this->baseUrl('admin/toggle-user/id/'.$user->user_id)?>'>Deactiveer</a>
+			         <?php else: ?>
+			         <a href='<?=$this->baseUrl('admin/toggle-user/id/'.$user->user_id)?>'>Activeer</a>
+			         <?php endif; ?>
+			     <?php if($this->viewer->role=='super admin'):?>
+			     | <a onclick="return confirm('Wilt u deze gebruiker verwijderen?');" href='<?=$this->baseUrl('admin/delete-user/id/'.$user->user_id)?>'>Verwijderen</a>
+			     <?php endif; ?>
+			          
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</table>

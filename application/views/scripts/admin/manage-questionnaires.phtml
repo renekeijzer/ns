@@ -1,0 +1,29 @@
+<h1>Vragenlijsten beheren</h1>
+<div class='col-md-12' style='margin-top:10px; margin-bottom:10px;'><a class='btn btn-success' href='<?=$this->baseUrl('admin/create-questionnaire')?>'><span class='glyphicon glyphicon-plus'></span> Vragenlijst toevoegen</a></div>
+	<!-- Table -->
+	<table class="table table-condensed table-hover">
+		<tr class='active'>
+			<th>Vragenlijst</th>
+			<th>Acties</th>
+		</tr>
+		<?php foreach($this->forms as $form):?>
+		<?php if($form->started==1): ?>
+		<tr class='success'>
+		<?php else: ?>
+	    <tr class='danger'>
+	    <?php endif; ?>
+			<td><?=$form->title;?></td>
+			<td>
+			     <a href='<?=$this->baseUrl('admin/view-questionnaire/id/'.$form->questionnaire_id)?>'>Bekijken</a> | 
+			     <a href='<?=$this->baseUrl('admin/update-questionnaire/id/'.$form->questionnaire_id)?>'>Wijzigen</a> | 
+			     <?php if($form->started==1): ?>
+			         <a href='<?=$this->baseUrl('admin/toggle-questionnaire/id/'.$form->questionnaire_id)?>'>Stoppen</a>
+			         <?php else: ?>
+			         <a href='<?=$this->baseUrl('admin/toggle-questionnaire/id/'.$form->questionnaire_id)?>'>Starten</a>
+			         <?php endif; ?>
+			          | 
+			     <a href='<?=$this->baseUrl('admin/results-questionnaire/id/'.$form->questionnaire_id)?>'>Statistieken bekijken</a>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</table>

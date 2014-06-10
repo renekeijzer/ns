@@ -1,0 +1,106 @@
+<style>
+    .input-type{display:none;}
+</style>
+<h1>Nieuwe vraag toevoegen</h1>
+<form method='post' action='<?=$this->url()?>'>
+	<div class='col-md-3'>Titel van de vraag</div>
+	<div class='col-md-9'>
+		<input class='form-control' type='text' name='label' />
+	</div>
+	<div class='col-md-12' style='margin-top: 20px'></div>
+	<div class='col-md-3'>Vraagtype</div>
+	<div class='col-md-9'>
+		<select id='type' name='type'>
+			<option value='text'>Enkele regel tekst</option>
+			<option value='textarea'>Meerdere regels tekst</option>
+			<option value='select'>Dropdown</option>
+			<option value='scale'>Schaal</option>
+			<option value='slider'>Slider</option>
+			<option value='checkbox'>Checkbox</option>
+		</select>
+	</div>
+	<div class='col-md-12' style='margin-top: 20px'></div>
+	<div class='col-md-3'>Verplicht in te vullen?</div>
+	<div class='col-md-9'>
+		<input type='checkbox' name='required' />
+	</div>
+	<div class='col-md-12' style='margin-top: 20px'></div>
+	<div class='col-md-3'>"Anders" weergeven?</div>
+	<div class='col-md-9'>
+		<input type='checkbox' name='comments' />
+	</div>
+	<div class='col-md-12' style='margin-top: 20px'></div>
+	<div id='text' class='input-type'></div>
+	<div id='textarea' class='input-type'>
+		<div class='col-md-3'>Maximum aantal tekens:</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='params[maxlength]' />
+		</div>
+	</div>
+	<div id='select' class='input-type'>
+		<div class='col-md-3'>Keuzes</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='options[1]' placeholder='Keuze 1' /><br />
+			<a class='addAnother'>Nog een keuze toevoegen</a>
+		</div>
+	</div>
+	<div id='checkbox' class='input-type'>
+		<div class='col-md-3'>Keuzes</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='options[1]' placeholder='Keuze 1' /><br />
+			<a class='addAnother'>Nog een keuze toevoegen</a>
+		</div>
+	</div>
+	<div id='scale' class='input-type'>
+		<div class='col-md-3'>Schaal van</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[min]' /> tot <input
+				type='number' class='form-control' name='params[max]' />
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Minimum label</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='params[minlabel]' />
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Maximum label</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='params[maxlabel]' />
+		</div>
+	</div>
+	<div id='slider' class='input-type'>
+		<div class='col-md-3'>Minimum</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[min]' />
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Maximum</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[max]' />
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Stapgrootte</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[step]' />
+		</div>
+	</div>
+	<div class='col-md-12' style='margin-top:40px'>
+	   <input type='submit' class='btn btn-success' value="Opslaan"/>
+	</div>
+</form>
+<script>
+$('form').on('submit',function(e){
+	$('.input-type:hidden').remove();
+	return true;
+});
+$('#type').on('change',function(){
+	var tmp = $(this).val();
+	$('.input-type').hide();
+    $('#'+tmp).show();
+});
+var count = 1;
+$('.addAnother').on('click',function(){
+	count++;
+	$(this).before('<input type="text" class="form-control" name="options['+count+']" placeholder="Keuze '+count+'"/><br/>');
+});
+</script>

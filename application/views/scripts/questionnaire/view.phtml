@@ -36,13 +36,12 @@
 		<?php break;?>
 		<?php case "slider":?>
 		<div data-role="fieldcontain">
-
+                <?php $attributes = json_decode($q->params); ?>
 				<label for="<?= $q->question_id?>" class="ui-slider"
 					id="slider-label"><?= $q->label;?></label> <input type="number"
 					data-type="range" name="<?= $q->question_id?>" id="slider"
-					value="<?= Zend_Json::Decode($q->params)['min'] + Zend_Json::Decode($q->params)['max'] / 2?>"
-					min="<?= Zend_Json::Decode($q->params)['min']?>"
-					max="<?= Zend_Json::Decode($q->params)['max']?>"
+					value="<?=(($attributes->min + $attributes->max)/2);?>"
+					<?php foreach($attributes as $k=>$v) echo "$k='$v'";?>
 					data-highlight="true"
 					class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input"
 					<?= ($q->required == 1 ? "required":"");?>>
@@ -88,7 +87,7 @@
 <?php endif;?>
 			</div>
 		<?php break;?>
-		<?php case "radio":?>
+		<?php case "scale":?>
 		<div data-role="fieldcontain">
 
 				<fieldset data-role="controlgroup"
@@ -98,29 +97,19 @@
 		
 		<?php
 			
-			$values = Zend_Json::decode ( $q->options );
-			foreach ( $values as $k => $v ) :
+			$params = json_decode( $q->params);
+			echo $params->minlabel;
+			$max = $params->max;
+			if($params->min>0) ++$max;
+			for( $i=$params->min;$i<$max;$i++) :
 				?>
-		<div class="ui-radio">
 							<input type="radio" name="<?= $q->question_id?>"
 								<?= ($q->required == 1 ? "required":"");?>
-								id="<?= $q->question_id.$k?>" value="<?= $k?>"> <label
-								for="<?= $q->question_id.$k?>" data-corners="true"
-								data-shadow="false" data-iconshadow="true"
-								data-wrapperels="span" data-icon="radio-off" data-theme="c"
-								data-mini="false"
-								class="ui-btn ui-fullsize ui-btn-icon-left ui-corner-top ui-btn-up-c ui-radio-off">
-								<span class="ui-btn-inner ui-corner-top"> <span
-									class="ui-btn-text"><?= $v?>
-					</span> <span class="ui-icon ui-icon-shadow ui-icon-radio-off">
-										&nbsp; </span>
-							</span>
-							</label>
-						</div>
+								id="<?= $q->question_id.$k?>" value="<?= $i?>"/> 
 			       
 			
 		
-		<?php endforeach;?>
+		<?php endfor; echo $params->maxlabel;?>
 		</div>
 				</fieldset>
 				<?php if($q->comments ==1):?>

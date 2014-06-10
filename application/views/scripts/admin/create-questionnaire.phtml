@@ -1,3 +1,27 @@
-<div>
-	<h3><b>View for create-questionaire/adminController</b></h3>
-</div>
+<h1>Vragenlijst aanmaken</h1>
+<form method='post' action=<?=$this->url();?>>
+    <div class='col-md-3'>
+        <label>Titel</label>
+    </div>
+    <div class='col-md-3'>
+        <input type="text" class='form-control' name='title' placeholder='titel' required/>
+    </div>
+    <div class='col-md-12' style='margin-top:20px;'></div>
+    <div class='col-md-3'>
+        Actief tot: 
+    </div>
+    <div class='col-md-3'>
+        <input class='form-control' min="<?=date('Y-m-d')?>" name='expire_date' type='date' required/>
+    </div>
+    <div class='col-md-12' style='margin-top:20px;'></div>
+    <div class='col-md-3'>
+        Limiteer 1 vragenlijst per gebruiker?
+    </div>
+    <div class='col-md-9'>
+        <input type='checkbox' name='once'/>
+    </div>
+    <div class='col-md-12' style='margin-top:20px;'></div>
+    <div class='col-md-12'>
+        <input type='submit' value='Opslaan' class='btn btn-success'/>
+    </div>
+</form>
