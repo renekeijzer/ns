@@ -1,0 +1,102 @@
+<style>
+    .input-type{display:none;}
+</style>
+<h1>Vraag aanpassen</h1>
+<form method='post' action='<?=$this->url()?>'>
+	<div class='col-md-3'>Titel van de vraag</div>
+	<div class='col-md-9'>
+		<input class='form-control' type='text' name='label' value='<?= $this->text;?>' />
+	</div>
+	<div class='col-md-12' style='margin-top: 20px'></div>
+
+	<div class='col-md-12' style='margin-top: 20px'></div>
+	<div class='col-md-3'>Verplicht in te vullen?</div>
+	<div class='col-md-9'>
+		<input type='checkbox' name='required' <?= $this->required;?> />
+	</div>
+	<div class='col-md-12' style='margin-top: 20px'></div>
+	<div class='col-md-3'>"Anders" weergeven?</div>
+	<div class='col-md-9'>
+		<input type='checkbox' name='comments' <?=$this->comments;?> />
+	</div>
+	<div class='col-md-12' style='margin-top: 20px'></div>
+	<div id='text' class='input-type'></div>
+	<div id='textarea' class='input-type'>
+		<div class='col-md-3'>Maximum aantal tekens:</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='params[maxlength]' value='<?= $this->maxlength;?>'/>
+		</div>
+	</div>
+	<div id='select' class='input-type'>
+		<div class='col-md-3'>Keuzes</div>
+		<div class='col-md-9'>
+			<?php if($this->options != null):?>
+			<?php foreach ($this->options as $k => $v):?>
+			<input type='text' class='form-control' name='options[<?=$k?>]' placeholder='Keuze <?=$k?>' value='<?=$v?>' /><br />
+			<?php endforeach;endif;?>
+			<a class='addAnother'>Nog een keuze toevoegen</a>
+		</div>
+	</div>
+	<div id='checkbox' class='input-type'>
+		<div class='col-md-3'>Keuzes</div>
+		<div class='col-md-9'><?php if($this->options != null):?>
+			<?php foreach ($this->options as $k => $v):?>
+			<input type='text' class='form-control' name='options[<?=$k?>]' placeholder='Keuze <?=$k?>' value='<?=$v?>' /><br />
+			<?php endforeach;endif;?>
+			
+			<a class='addAnother'>Nog een keuze toevoegen</a>
+		</div>
+	</div>
+	<div id='scale' class='input-type'>
+		<div class='col-md-3'>Schaal van</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[min]' value='<?= $this->min;?>' /> tot <input
+				type='number' class='form-control' name='params[max]' value='<?= $this->max;?>' />
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Minimum label</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='params[minlabel]' value='<?= $this->minlabel;?>'/>
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Maximum label</div>
+		<div class='col-md-9'>
+			<input type='text' class='form-control' name='params[maxlabel]' value='<?= $this->maxlabel;?>'/>
+		</div>
+	</div>
+	<div id='slider' class='input-type'>
+		<div class='col-md-3'>Minimum</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[min]'  value='<?= $this->min;?>'/>
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Maximum</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[max]'  value='<?= $this->max;?>'/>
+		</div>
+		<div class='col-md-12' style='margin-top: 20px'></div>
+		<div class='col-md-3'>Stapgrootte</div>
+		<div class='col-md-9'>
+			<input type='number' class='form-control' name='params[step]' value='<?= $this->step;?>' />
+		</div>
+	</div>
+	<div class='col-md-12' style='margin-top:40px'>
+	   <input type='submit' class='btn btn-success' value="Opslaan"/>
+	</div>
+</form>
+<script>
+$('form').on('submit',function(e){
+	$('.input-type:hidden').remove();
+	return true;
+});
+$(document).ready(function(){
+	var tmp = "<?= $this->type;?>";
+	$('.input-type').hide();
+    $('#'+tmp).show();
+});
+var count = 1;
+$('.addAnother').on('click',function(){
+	count++;
+	$(this).before('<input type="text" class="form-control" name="options['+count+']" placeholder="Keuze '+count+'"/><br/>');
+});
+</script>

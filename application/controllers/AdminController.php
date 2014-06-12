@@ -286,6 +286,56 @@ class AdminController extends Zend_Controller_Action{
 			readfile($file_url);
 		}
 	}
+	public function updateQuestionAction(){
+		$questionTable = new Application_Model_DbTable_Questions();
+		$question = $questionTable->find($this->getParam("id"))->current();
+		if($this->getRequest()->isPost()){
+			
+	
+			$question->label=$this->getParam('label');
+			if($this->getParam('required')=='on')
+				$question->required = 1;
+			if($this->getParam('comments')=='on')
+				$question->comments = 1;
+			if(count($this->getParam('params'))>0)
+				$question->params = json_encode($this->getParam('params'));
+			if(count($this->getParam('options'))>0)
+				$question->options = json_encode($this->getParam('options'));
+			$question->save();
+			$this->redirect('admin/update-questionnaire/id/'.$question->questionnaire_id);
+		}
+		
+		
+		$this->view->type = $question->type;
+		switch ($question->type){
+			case "textarea":
+				$this->view->maxlength = json_decode($question->params)->maxlength;
+				break;
+			case "slider":
+				$this->view->min= json_decode($question->params)->min;
+				$this->view->max= json_decode($question->params)->max;
+				$this->view->step = json_decode($question->params)->step;
+				break;
+			case "select":
+				$this->view->options = json_decode($question->options);
+				break;
+			case "scale":
+				$this->view->min= json_decode($question->params)->min;
+				$this->view->max= json_decode($question->params)->max;
+				$this->view->minlabel= json_decode($question->params)->minlabel;
+				$this->view->maxlabel= json_decode($question->params)->maxlabel;
+				break;
+			case "checkbox":
+				$this->view->options = json_decode($question->options);
+				break;
+			default:
+			break;
+		}
+
+		$this->view->text = $question->label;
+		$this->view->required = ($question->required ? "checked":"");
+		$this->view->comments = ($question->comments ? "checked":"");
+	}
 	
 	public function importUsersAction(){
 		if($this->getRequest()->isPost()){
