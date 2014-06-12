@@ -24,7 +24,6 @@ class AdminController extends Zend_Controller_Action{
 	}
 	
 	public function indexAction(){
-		
 	}
 	
 	public function logoutAction(){
@@ -122,7 +121,14 @@ class AdminController extends Zend_Controller_Action{
 	}
 	
 	public function viewUserAction(){
-		
+		$userTable = new Application_Model_DbTable_User();
+		$user = $userTable->find($this->getParam('id'))->current();
+		$this->view->user = $user;
+		if($this->getRequest()->isPost()){
+			$user->role = $this->getParam('role');
+			$user->enabled = ($this->getParam('active') ? '1':'0');
+			$user->save();
+		}
 	}
 	
 	public function toggleUserAction(){

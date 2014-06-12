@@ -16,7 +16,7 @@ class UserController extends Zend_Controller_Action{
 			$this->redirect("user/update");
 		}
 		$dateNow = date("%m%d/%Y H:i:s");
-		$select = $questionnaireTable->select()->where("expire_date >= ?",  $dateNow);
+		$select = $questionnaireTable->select()->where("expire_date >= ?",  $dateNow)->where("started = ?",1);
 		/*
 		 * @todo when login is done, only show the right questionnaires
 		 */

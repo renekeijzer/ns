@@ -19,6 +19,7 @@ class QuestionnaireController extends Zend_Controller_Action{
 				$row->question_id = $q->question_id;
 				$row->answer = ($this->getParam($q->question_id) == null? "":$this->getParam($q->question_id));
 				$row->user_id = ($this->getViewer() != null ? $this->getViewer()->user_id:"") ;
+				$row->date = date("Y-m-d H:i:s");
 				$row->save();
 				if($this->getParam("c".$q->question_id) != ""){
 	 				$rowComments->answer_id = $row->anwer_id;

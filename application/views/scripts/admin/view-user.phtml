@@ -1,3 +1,35 @@
-<div>
-	<h3><b>View for view-user/adminController</b></h3>
+<div class="col-md-12">
+	<form action="<?= $this->url();?>" method="post">
+	<table class='table table-condensed table-hover'>
+		<tr><th></th><th>Waardes</th>
+		</tr>
+		<tr>
+			<td>Naam:</td>
+			<td><?= $this->user->username?></td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><?= $this->user->email?></td>
+		</tr>
+		<tr>
+			<td>Telnr:</td>
+			<td><?= $this->user->telnr?></td>
+		</tr>
+		<tr>
+			<td>Role:</td>
+			<td><select name="role">
+					<option value="observer" <?=($this->user->role == "observer" ? "selected":"")?> >observer</option>
+					<option value="admin" <?=($this->user->role == "admin" ? "selected":"")?>>admin</option>
+					<option value="super admin" <?=($this->user->role == "super admin" ? "selected":"")?>>super admin</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td>Actief:</td>
+			<td><input type="checkbox" name="active"
+				<?= ($this->user->enabled ? "checked":"");?> /></td>
+		</tr>
+	
+	</table>
+		<input class="btn btn-success"type="submit" value="opslaan" />
+		</form>
 </div>
