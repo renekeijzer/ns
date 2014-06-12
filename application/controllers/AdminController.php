@@ -24,6 +24,15 @@ class AdminController extends Zend_Controller_Action{
 	}
 	
 	public function indexAction(){
+		$userTable = new Application_Model_DbTable_User();
+		$this->view->users = $userTable->fetchAll($userTable->select()->limit(5)->order('user_id desc'));
+		$this->view->viewer = $viewer = $this->getViewer();
+		$formTable = new Application_Model_DbTable_Questionnaire();
+		$this->view->forms = $formTable->fetchAll($formTable->select()->limit(5)->order('questionnaire_id desc'));
+		$answerTable = new Application_Model_DbTable_Answers();
+		$this->view->answerCount = count($answerTable->fetchAll());
+		$this->view->userCount = count($userTable->fetchAll($userTable->select()->where('role = ?','observer')));
+		$this->view->questionnaireCount = count($formTable->fetchAll());
 	}
 	
 	public function logoutAction(){
