@@ -25,12 +25,16 @@
 	<head> 
 	<title>My Page</title> 
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 	<script type="text/javascript" src="<?=$this->baseUrl('js/jquery-1.10.2.js');?>"></script>
 	<script type="text/javascript" src="<?=$this->baseUrl('js/jquery.mobile-1.4.2.min.js');?>"></script>
 	<link rel="stylesheet" href="<?=$this->baseUrl('css/jquery.mobile-1.4.2.min.css');?>" />
 	<link rel="stylesheet" href="<?=$this->baseUrl('css/NS.min.css');?>" />
 	<link rel="stylesheet" href="<?=$this->baseUrl('css/jquery.mobile.icons.min.css');?>" />
 	<link href="<?= $this->baseUrl("css/style.css")?>" rel="stylesheet"/>
+	<link rel="apple-touch-icon" href="<?=$this->baseUrl('images/app-icon.png');?>" />
+	<link rel="icon" sizes="196x196" href="<?=$this->baseUrl('images/app-icon.png');?>" />
 </head> 
 <body> 
 <div data-role="page">
