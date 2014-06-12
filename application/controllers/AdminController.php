@@ -33,12 +33,6 @@ class AdminController extends Zend_Controller_Action{
 	}
 	
 
-	public function exportAction(){
-		
-	}
-	public function importAction(){
-		
-	}
 	/* User CRUD*/
 	public function manageUsersAction(){
 	    $usersTable = new Application_Model_DbTable_User();
@@ -65,7 +59,7 @@ class AdminController extends Zend_Controller_Action{
 	        if(strlen($newPass)>0){
 	            $user->password = sha1($newPass.$salt);
 	        } else {
-	            $user->password = $this->randomPassword();
+	            $user->password = sha1($this->randomPassword().$salt);
 	        }
 	        $user->telnr = $number;
 	        $user->role = $role;
@@ -263,6 +257,72 @@ class AdminController extends Zend_Controller_Action{
 		    $this->redirect('admin/manage-questionnaires');
 		$question->delete();
 		$this->redirect('admin/update-questionnaire/id/'.$questionnaire->questionnaire_id);
+	}
+	public function exportUsersAction(){
+		if($this->getRequest()->isPost()){
+			$userTable = new Application_Model_DbTable_User();
+			$this->_helper->layout->disableLayout();
+			$this->_helper->viewRenderer->setNoRender(TRUE);
+			$users = $userTable->fetchAll();
+			$xmlString = "<users>";
+			foreach ($users as $user){
+				$xmlString .="<user>";
+				$xmlString .="<username>".$user->username."</username>";
+				$xmlString .="<role>".$user->role."</role>";
+				$xmlString .="<telnr>".$user->telnr."</telnr>";
+				$xmlString .="<email>".$user->username."</email>";
+				$xmlString .="<enabled>".$user->enabled."</enabled>";
+				$xmlString .="</user>";
+			}
+			$xmlString .="</users>";
+			$file = fopen('../..'.$this->view->baseUrl()."/xmlfeed.xml", "w");
+			fwrite($file, $xmlString);
+			
+			
+			$file_url = '../..'.$this->view->baseUrl()."/xmlfeed.xml";
+			header('Content-Type: application/xml');
+			header("Content-Transfer-Encoding: Binary");
+			header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\"");
+			readfile($file_url);
+		}
+	}
+	
+	public function importUsersAction(){
+		if($this->getRequest()->isPost()){
+			$userTable = new Application_Model_DbTable_User();
+			$xmlFeed = simplexml_load_string ( $this->_getParam('xml') );
+			
+			foreach ($xmlFeed as $row){
+				try {
+				$user = $userTable->createRow();
+				$user->username = $username = $row->username;
+				$user->email = $email = $row->email;
+				$user->role = $row->role;
+				$user->telnr = $row->telnr;
+				$user->salt = $salt = uniqid(mt_rand(), true);
+				if($row->password != ""){
+					$user->password = $newPass = sha1($row->password.$salt);
+				}else{
+					die($row->username." heeft geen password! elke gebruiker moet een password hebben");
+					$user->password = $newPass = sha1($this->randomPassword().$salt);
+				}
+				$user->enabled = 1;
+				$user->save();
+				
+// 				 $mail = new Zend_Mail();
+// 	            $mail->setBodyText("Beste Gebruiker, Uw account is aangemaakt. U kunt inloggen met de gebruikersnaam: $username en met het wachtwoord: $newPass");
+// 	            $mail->setBodyHtml("Beste Gebruiker, <br/><br/>Uw account is aangemaakt.<br/> U kunt inloggen met de gebruikersnaam: $username <br/>en met het wachtwoord: $newPass");
+// 	            $mail->setFrom('noreply@ns-app.com', 'NS Questionnaire');
+// 	            $mail->addTo($row->email, $row->username);
+// 	            $mail->setSubject('Uw account is aangemaakt.');
+// 	            $mail->send();
+				}catch (Exception $ex){
+					die( "Something has gone wrong! check the documentation or concact the system administrator");
+				}
+			}
+			$this->redirect('admin/manage-users');
+		}
+		
 	}
 	
 	protected function _process($values)
